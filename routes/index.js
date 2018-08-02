@@ -8,5 +8,6 @@ router.get('/', function(req, res) {
 });
 router.get('/api/users',users.getUsers);
 router.post('/api/signup',users.signup);
+router.get('/api/login',users.login);
 
 module.exports = router;
