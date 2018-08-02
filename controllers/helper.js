@@ -1,5 +1,4 @@
 var crypto = require('crypto');
-var helper = require('../models/helper');
 var async = require('async');
 
 module.exports = {
