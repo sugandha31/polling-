@@ -23,7 +23,7 @@ function add(data, callback){
         Query = "insert into "+tablename+Query
         db.query(Query,function(err,resp){
             if(!err){
-                callback(null,null)
+                callback(null,resp)
             }else{
                 callback(err,null)
             }
@@ -36,8 +36,9 @@ function getByField(fieldKey, fieldValue,callback){
     db.query(Query,function(err,data){
         if(!err){
             //console.log(data);
-            if(data!=null){
-                callback(null,data)
+            if(data!=null || data!=undefined){
+                console.log("from model--"+JSON.stringify(data));
+                callback(null,JSON.stringify(data))
             }
             else{
                 callback(null,null)

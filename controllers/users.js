@@ -36,7 +36,7 @@ function signup(req,res){
                                     res.status(200).json({
                                         status: true,
                                         message: "User added",
-                                        data: {}
+                                        data: {data}
                                     })
                                 }else{
                                     res.status(500).json({
@@ -80,19 +80,16 @@ function signup(req,res){
 }
 
 function login(req, res){
-    if(req.query.hasOwnProperty('email') && req.query.hasOwnProperty('password')){
-        var email = req.query.email;
-        var password = req.query.password;
+    if(req.body.hasOwnProperty('email') && req.body.hasOwnProperty('password')){
+        var email = req.body.email;
+        var password = req.body.password;
         users.getByField('email', email, function(err, result){
-            console.log(result);
-            if(!err && result.length>0){
+            result = JSON.parse(result);
+            if(!err && (result!=undefined || result!=null) && result.length>0){
                 console.log(result);
                 password = helper.encryptData(password);
-                //var result_object = JSON.stringify(result);
-                //result_object = JSON.parse(result_object);
                 console.log(password);
-                console.log("--------"+result);
-                if(password===result.password){
+                if(password==result[0].password){
                     res.status(200).json({
                         status: true,
                         message: "User Authentication Successfull.",
