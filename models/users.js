@@ -1,13 +1,14 @@
-var tableName = 'users';
+var tablename = 'users';
 var helper = require('./helper');
 
 module.exports = {
     getAll: getAll,
-    add : add
+    add : add,
+    getByField : getByField
 }
 
 function getAll(callback){
-    Query = 'select * from ' + tableName;
+    Query = 'select * from ' + tablename;
     db.query(Query, function(err,data){
         if(!err){
             callback(null,data);
@@ -19,7 +20,7 @@ function getAll(callback){
 
 function add(data, callback){
     helper.insertQuery(data,function (err,Query) {
-        Query = "insert into "+tableName+Query
+        Query = "insert into "+tablename+Query
         db.query(Query,function(err,resp){
             if(!err){
                 callback(null,null)
@@ -28,4 +29,22 @@ function add(data, callback){
             }
         })            
     })
+}
+
+function getByField(fieldKey, fieldValue,callback){
+    Query = "select * from "+tablename+" where "+fieldKey+"='"+fieldValue+"'";
+    db.query(Query,function(err,data){
+        if(!err){
+            //console.log(data);
+            if(data!=null){
+                callback(null,data)
+            }
+            else{
+                callback(null,null)
+            }
+        }
+        else{
+            callback(err,null);
+        }
+    });
 }
