@@ -1,14 +1,16 @@
-var tablename = 'users';
-var helper = require('./helper');
+var dbTables = require('../config/db_table');
+var tablename = dbTables.users;
+var crypto = require('../controllers/helper');
 
 module.exports = {
-    getAll: getAll,
-    add : add,
-    getByField : getByField
+    validateSession: validateSession,
+    updateSession:updateSession,
+    changePassword:changePassword
 }
 
-function getAll(callback){
-    Query = 'select * from ' + tablename;
+//function to validate session
+function validateSession(email,callback){
+    Query = 'select session from ' + tablename +' WHERE email = "'+email+'"';
     db.query(Query, function(err,data){
         if(!err){
             callback(null,data);
@@ -18,33 +20,25 @@ function getAll(callback){
     });
 }
 
-function add(data, callback){
-    helper.insertQuery(data,function (err,Query) {
-        Query = "insert into "+tablename+Query
-        db.query(Query,function(err,resp){
-            if(!err){
-                callback(null,resp)
-            }else{
-                callback(err,null)
-            }
-        })            
-    })
+// function to update session
+function updateSession(email,value,callback){
+    Query = 'UPDATE '+tablename +' SET session ="' +value +'" WHERE email = "'+email+'"';
+    db.query(Query, function(err,data){
+        if(!err){
+            callback(null,data);
+        }else{
+            callback(err,null);
+        }
+    });
 }
 
-function getByField(fieldKey, fieldValue,callback){
-    Query = "select * from "+tablename+" where "+fieldKey+"='"+fieldValue+"'";
-    db.query(Query,function(err,data){
+// function to change password
+function changePassword(email,value,callback){
+    Query = 'UPDATE '+tablename +' SET password ="' +crypto.encryptData(value) +'" WHERE email = "'+email+'"';
+    db.query(Query, function(err,data){
         if(!err){
-            //console.log(data);
-            if(data!=null || data!=undefined){
-                console.log("from model--"+JSON.stringify(data));
-                callback(null,JSON.stringify(data))
-            }
-            else{
-                callback(null,null)
-            }
-        }
-        else{
+            callback(null,data);
+        }else{
             callback(err,null);
         }
     });
