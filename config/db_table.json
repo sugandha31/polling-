@@ -1,5 +1,6 @@
 {
     "users":"users",
     "category":"poll_category",
-    "polls":"polls"
+    "polls":"polls",
+    "option":"poll_option"
 }
