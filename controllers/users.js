@@ -1,7 +1,5 @@
 var commonDB = require('../models/commonDB');
 var users = require('../models/users');
-var uid = require('uuid');
-var pwd_validator = require('password-validator');
 var email_validator = require('email-validator');
 var helper = require('./helper');
 var dbTables = require('../config/db_table');
@@ -140,14 +138,14 @@ function login(req, res) {
                         }
                     });
                 } else {
-                    res.status(400).json({
+                    res.status(200).json({
                         status: false,
                         message: "Password does not match.",
                         data: {}
                     })
                 }
             } else if (!err && (result != undefined || result != null) && result.length == 0) {
-                res.status(404).json({
+                res.status(204).json({
                     status: false,
                     message: "User not Found.",
                     data: {}
@@ -161,7 +159,7 @@ function login(req, res) {
             }
         })
     } else {
-        res.status(400).json({
+        res.status(200).json({
             status: false,
             message: "Data Missing",
             data: {}
@@ -197,7 +195,7 @@ function getUsers(req, res) {
                 data: result
             })
         } else {
-            res.status(500).json({
+            res.status(200).json({
                 status: false,
                 message: "Try again",
                 data: {}
