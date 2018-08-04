@@ -36,6 +36,6 @@ router.post('/api/createpoll', poll.create_poll);
 */
 router.get('/api/checksimilarpoll', poll.checkSimilar);
 
-
+router.get('/api/approvepoll',poll.approvePoll);
 
 module.exports = router;

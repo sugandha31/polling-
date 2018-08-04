@@ -4,7 +4,8 @@ var polls = require('../models/poll');
 
 module.exports = {
     create_poll: create_poll,
-    checkSimilar: checkSimilar
+    checkSimilar: checkSimilar,
+    approvePoll:approvePoll
 }
 
 function create_poll(req, res) {
@@ -49,17 +50,17 @@ function create_poll(req, res) {
                                         data_option.option_value = option[i].option_value;
                                         commonDB.add(dbTables.option, data_option, function (err, result) {
                                             if (err) {
-                                               valid=false;
+                                                valid = false;
                                             }
                                         });
                                     }
-                                    if(valid){
+                                    if (valid) {
                                         res.status(200).json({
                                             status: true,
                                             message: "Poll Created",
                                             data: { result }
                                         });
-                                    }else{
+                                    } else {
                                         res.status(200).json({
                                             status: false,
                                             message: "Unable to create poll options",
@@ -116,6 +117,31 @@ function checkSimilar(req, res) {
                 res.status(200).json(data);
             }
         });
+    } else {
+        res.status(200).json({
+            status: false,
+            message: "Data Missing",
+            data: {}
+        });
+    }
+}
+
+function approvePoll(req, res) {
+    if (req.query.hasOwnProperty('approve')) {
+        var fieldKey = {
+            "one": "user_id",
+            "two": "category_id",
+            "three": "poll"
+        }
+        var fieldValue = {
+            "one": "ankit",
+            "two": "2",
+            "three": "sexx?"
+        }
+        commonDB.updateByField(dbTables.polls, fieldKey, fieldValue, 'id', 2, function (data) {
+            console.log(data);
+        })
+
     } else {
         res.status(200).json({
             status: false,
