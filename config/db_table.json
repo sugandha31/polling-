@@ -2,5 +2,6 @@
     "users":"users",
     "category":"poll_category",
     "polls":"polls",
-    "option":"poll_option"
+    "option":"poll_option",
+    "livepoll":"live_poll"
 }

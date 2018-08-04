@@ -3,7 +3,6 @@ var dbTables = require('../config/db_table');
 
 module.exports = {
     promptDuplicate: promptDuplicate,
-    insertOptions: insertOptions
 }
 
 function promptDuplicate(poll,callback) {
@@ -43,10 +42,4 @@ function promptDuplicate(poll,callback) {
         }
 
     });
-}
-
-function insertOptions(options,callback) {
-
-    
-
 }
