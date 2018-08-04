@@ -42,6 +42,7 @@ server.on('connection', function (socket) {
 
     //when user click the button
     socket.on('plus_clicked', function (data) {
+        socket.emit('ques_poll', ques);
         pos_counter = parseInt(data.count);
         pos_counter += 1;//increments positive global click count
         data.count = pos_counter;
@@ -58,6 +59,7 @@ server.on('connection', function (socket) {
 
 
     socket.on('minus_clicked', function (data) {
+        socket.emit('ques_poll', ques);
         neg_counter = parseInt(data.count);
         neg_counter += 1;//increments negative global click count
         data.count = neg_counter;
