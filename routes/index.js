@@ -35,7 +35,9 @@ router.post('/api/createpoll', poll.create_poll);
 @QueryParam {poll}
 */
 router.get('/api/checksimilarpoll', poll.checkSimilar);
-
+/*
+@QueryParam {approve,poll_id}
+*/
 router.get('/api/approvepoll',poll.approvePoll);
 
 module.exports = router;

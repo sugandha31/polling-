@@ -4,8 +4,8 @@ module.exports = {
     getAll: getAll,
     add: add,
     getByField: getByField,
-    getByFieldLike:getByFieldLike,
-    updateByField:updateByField
+    getByFieldLike: getByFieldLike,
+    updateByField: updateByField
 }
 
 function getAll(tablename, callback) {
@@ -66,33 +66,29 @@ function getByField(tablename, fieldKey, fieldValue, callback) {
     });
 }
 
-function updateByField(tablename,fieldKey,fieldValue,clauseKey,clauseValue,callback){
-    Query = "UPDATE "+tablename+" SET "+fieldKey+" = '" + fieldValue + "' WHERE "+clauseKey+" = '" + clauseValue + "'";
-    var query = "UPDATE "+tablename+" SET ";
-    Object.keys(fieldValue).forEach(function(key) {
-      if(!(fieldValue[key] === null || fieldValue[key] === ""))
-        query += fieldKey[key] + "='" + fieldValue[key] + "',";  
+function updateByField(tablename, fieldKey, fieldValue, clauseKey, clauseValue, callback) {
+    var query = "UPDATE " + tablename + " SET ";
+    Object.keys(fieldValue).forEach(function (key) {
+        if (!(fieldValue[key] === null || fieldValue[key] === ""))
+            query += fieldKey[key] + " ='" + fieldValue[key] + "',";
     });
-    query+= " WHERE "+clauseKey+" = '" + clauseValue + "'";
+    query += " WHERE " + clauseKey + " = '" + clauseValue + "'";
     var n = query.lastIndexOf(",");
-query = query.slice(0, n) + query.slice(n).replace(",", "");
-console.log(query);
-callback(query);
-    /*
-    db.query(Query, function (err, data) {
+    query = query.slice(0, n) + query.slice(n).replace(",", "");
+    console.log(query);
+
+    db.query(query, function (err, data) {
+        console.log("err--"+err);
+        console.log("data--"+data);
+        
         if (!err) {
-            if (data != null || data != undefined) {
-                callback(null, "updated")
-            }
-            else {
-                callback(null, "err")
-            }
+                callback("updated")
         }
         else {
-            callback(err, "err");
+            callback("err");
         }
 
 
     });
-    */
+
 }

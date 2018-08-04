@@ -34,6 +34,7 @@ function updateSession(email,value,callback){
 
 // function to change password
 function changePassword(email,value,callback){
+
     Query = 'UPDATE '+tablename +' SET password ="' +crypto.encryptData(value) +'" WHERE email = "'+email+'"';
     db.query(Query, function(err,data){
         if(!err){

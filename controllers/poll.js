@@ -127,19 +127,28 @@ function checkSimilar(req, res) {
 }
 
 function approvePoll(req, res) {
-    if (req.query.hasOwnProperty('approve')) {
+    if (req.query.hasOwnProperty('approve') && req.query.hasOwnProperty('id')) {
         var fieldKey = {
-            "one": "user_id",
-            "two": "category_id",
-            "three": "poll"
+            "one": "isActive"
         }
         var fieldValue = {
-            "one": "ankit",
-            "two": "2",
-            "three": "sexx?"
+            "one": "true"
         }
-        commonDB.updateByField(dbTables.polls, fieldKey, fieldValue, 'id', 2, function (data) {
-            console.log(data);
+        var id = req.query.id;
+        commonDB.updateByField(dbTables.polls, fieldKey, fieldValue, 'id', id, function (data) {
+            if(data == "updated"){
+                res.status(200).json({
+                    status: true,
+                    message: "Updated",
+                    data: {}
+                });
+            }else{
+                res.status(200).json({
+                    status: true,
+                    message: data,
+                    data: "error"
+                });
+            }
         })
 
     } else {
