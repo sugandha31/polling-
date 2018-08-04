@@ -205,43 +205,49 @@ function getUsers(req, res) {
 }
 
 function changePassword(req, res) {
+    if (req.body.hasOwnProperty('email') && req.body.hasOwnProperty('oldPassword') && req.body.hasOwnProperty('newPassword')) {
+        commonDB.getByField(dbTables.users, 'email', req.body.email, function (err, data) {
+            data = JSON.parse(data);
+            if (!err) {
+                if (data[0].password == helper.encryptData(req.body.oldPassword)) {
+                    users.changePassword(req.body.email, req.body.newPassword, function (err, data) {
+                        if (!err) {
+                            res.status(200).json({
+                                status: true,
+                                message: "Successfully updated",
+                                data: {}
+                            })
+                        } else {
+                            res.status(200).json({
+                                status: false,
+                                message: "Something seems to have failed. Try again",
+                                data: {}
+                            })
+                        }
+                    });
+                } else {
+                    res.status(200).json({
+                        status: false,
+                        message: "Password did not matched",
+                        data: {}
+                    })
+                }
 
-    commonDB.getByField(dbTables.users, 'email', req.body.email, function (err, data) {
-        data = JSON.parse(data);
-        if (!err) {
-            if (data[0].password == helper.encryptData(req.body.oldPassword)) {
-                users.changePassword(req.body.email, req.body.newPassword, function (err, data) {
-                    if (!err) {
-                        res.status(200).json({
-                            status: true,
-                            message: "Successfully updated",
-                            data: {}
-                        })
-                    } else {
-                        res.status(200).json({
-                            status: false,
-                            message: "Something seems to have failed. Try again",
-                            data: {}
-                        })
-                    }
-                });
-            }else{
+            } else {
                 res.status(200).json({
                     status: false,
-                    message: "Password did not matched",
+                    message: "Try again",
                     data: {}
                 })
             }
-
-        } else {
-            res.status(200).json({
-                status: false,
-                message: "Try again",
-                data: {}
-            })
-        }
-    })
-
+        })
+    } else {
+        res.status(200).json({
+            status: false,
+            message: "Data Missing",
+            data: {}
+        })
+    }
 
 
 
