@@ -60,31 +60,39 @@
 
             //Listen from server.js
             socket.on('pos_click_count', function (value) {
-                if(value.userid == userid)
-                $('#pos_counter').html(value.count);//Set new count value
+                if (value.userid == userid)
+                    $('#pos_counter').html(value.count);//Set new count value
             });
             socket.on('neg_click_count', function (value) {
-                if(value.userid == userid)
-                $('#neg_counter').html(value.count);//Set new count value
+                if (value.userid == userid)
+                    $('#neg_counter').html(value.count);//Set new count value
             });
-
+           
 
             //Says to server that the button has been clicked
             $('#btn_click_plus').click(function () {
+                document.getElementById("btn_click_plus").disabled = true;
+                document.getElementById("btn_click_minus").disabled = true;
                 user_detail = {
                     userid: userid,
                     count: document.getElementById('pos_counter').innerText
                 };
                 socket.emit('plus_clicked', user_detail);//Emitting user click
+                alert("Thank you for voting. You can now only view the poll live");
             });
 
             $('#btn_click_minus').click(function () {
+                document.getElementById("btn_click_minus").disabled = true;
+                document.getElementById("btn_click_plus").disabled = true;
+
                 user_detail = {
                     userid: userid,
                     count: document.getElementById('neg_counter').innerText
                 };
 
                 socket.emit('minus_clicked', user_detail);//Emitting user click
+                alert("Thank you for voting. You can now only view the poll live");
+
             });
 
         });

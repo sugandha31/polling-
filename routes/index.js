@@ -24,7 +24,7 @@ router.post('/api/login', users.login);
 */
 router.get('/api/logout', users.logout);
 /*
-@BodyParam {email,password}
+@BodyParam {email,oldPassword,newPassword}
 */
 router.post('/api/changepassword', users.changePassword);
 /*
