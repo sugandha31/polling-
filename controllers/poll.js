@@ -104,8 +104,6 @@ function create_poll(req, res) {
             data: {}
         });
     }
-
-
 }
 
 function checkSimilar(req, res) {

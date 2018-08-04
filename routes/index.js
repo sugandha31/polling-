@@ -3,6 +3,8 @@ var router = express.Router();
 var users = require('../controllers/users');
 var poll = require('../controllers/poll');
 
+var path = require('path');
+
 /* GET home page. */
 router.get('/', function (req, res) {
   res.render('index', { title: 'Express' });
@@ -33,5 +35,7 @@ router.post('/api/createpoll', poll.create_poll);
 @QueryParam {poll}
 */
 router.get('/api/checksimilarpoll', poll.checkSimilar);
+
+
 
 module.exports = router;

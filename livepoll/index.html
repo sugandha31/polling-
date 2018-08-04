@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Socket.IO Clicker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <h1 style="text-align: center" id="poll_ques"></h1>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 ">
+                <p style="text-align: center">
+                    <button id='btn_click_plus' class="bnt btn-lg btn-success">I Like It!</button>
+                </p>
+
+                <p style="text-align: center">People Liked:
+                    <span id="pos_counter"></span>
+                </p>
+            </div>
+            <div class="col-md-6 ">
+                <p style="text-align: center">
+                    <button id='btn_click_minus' class="bnt btn-lg btn-danger">I Hate It!</button>
+                </p>
+
+                <p style="text-align: center">People Disliked:
+                    <span id="neg_counter"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+
+            var params = (new URL(document.location)).searchParams;
+            var userid = params.get("userid");
+            var user_detail = {
+                userid: userid,
+                count: document.getElementById('neg_counter').innerText
+            }
+            var socket = io();//connect to the socket
+
+            socket.on('connect', function () {
+                console.log('Yeah I am connected!!');
+            });
+
+            socket.on('ques_poll', function (value) {
+                $('#poll_ques').html(value);
+            });
+
+            //Listen from server.js
+            socket.on('pos_click_count', function (value) {
+                if(value.userid == userid)
+                $('#pos_counter').html(value.count);//Set new count value
+            });
+            socket.on('neg_click_count', function (value) {
+                if(value.userid == userid)
+                $('#neg_counter').html(value.count);//Set new count value
+            });
+
+
+            //Says to server that the button has been clicked
+            $('#btn_click_plus').click(function () {
+                user_detail = {
+                    userid: userid,
+                    count: document.getElementById('pos_counter').innerText
+                };
+                socket.emit('plus_clicked', user_detail);//Emitting user click
+            });
+
+            $('#btn_click_minus').click(function () {
+                user_detail = {
+                    userid: userid,
+                    count: document.getElementById('neg_counter').innerText
+                };
+
+                socket.emit('minus_clicked', user_detail);//Emitting user click
+            });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -8,8 +8,8 @@ var mysql = require('mysql');
 var con = require('./config/db_config');
 
 var routes = require('./routes/index');
-
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
