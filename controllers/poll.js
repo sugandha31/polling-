@@ -5,7 +5,8 @@ var polls = require('../models/poll');
 module.exports = {
     create_poll: create_poll,
     checkSimilar: checkSimilar,
-    approvePoll:approvePoll
+    approvePoll:approvePoll,
+    getAllPolls:getAllPolls
 }
 
 function create_poll(req, res) {
@@ -158,4 +159,22 @@ function approvePoll(req, res) {
             data: {}
         });
     }
+}
+
+function getAllPolls(req,res){
+    commonDB.getAll(dbTables.polls,function(err,data){
+        if(!err){
+            res.status(200).json({
+                status: true,
+                message: "Fetched All Polls",
+                data: data
+            });
+        }else{
+            res.status(200).json({
+                status: true,
+                message: data,
+                data: "error"
+            });
+        }
+    })
 }

@@ -9,7 +9,9 @@ var path = require('path');
 router.get('/', function (req, res) {
   res.render('index', { title: 'Express' });
 });
-
+/*
+Get Request to get all users for admin
+*/
 router.get('/api/users', users.getUsers);
 /*
 @BodyParam {email,user_name,password}
@@ -38,6 +40,10 @@ router.get('/api/checksimilarpoll', poll.checkSimilar);
 /*
 @QueryParam {approve,poll_id}
 */
-router.get('/api/approvepoll',poll.approvePoll);
+router.get('/api/approvepoll', poll.approvePoll);
+/*
+Get Request to get all polls for dashboard
+*/
+router.get('/api/getAllPolls', poll.getAllPolls);
 
 module.exports = router;
