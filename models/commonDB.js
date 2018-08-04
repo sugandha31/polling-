@@ -4,7 +4,8 @@ module.exports = {
     getAll: getAll,
     add: add,
     getByField: getByField,
-    getByFieldLike:getByFieldLike
+    getByFieldLike: getByFieldLike,
+    updateByField: updateByField
 }
 
 function getAll(tablename, callback) {
@@ -63,4 +64,31 @@ function getByField(tablename, fieldKey, fieldValue, callback) {
             callback(err, null);
         }
     });
+}
+
+function updateByField(tablename, fieldKey, fieldValue, clauseKey, clauseValue, callback) {
+    var query = "UPDATE " + tablename + " SET ";
+    Object.keys(fieldValue).forEach(function (key) {
+        if (!(fieldValue[key] === null || fieldValue[key] === ""))
+            query += fieldKey[key] + " ='" + fieldValue[key] + "',";
+    });
+    query += " WHERE " + clauseKey + " = '" + clauseValue + "'";
+    var n = query.lastIndexOf(",");
+    query = query.slice(0, n) + query.slice(n).replace(",", "");
+    console.log(query);
+
+    db.query(query, function (err, data) {
+        console.log("err--"+err);
+        console.log("data--"+data);
+        
+        if (!err) {
+                callback("updated")
+        }
+        else {
+            callback("err");
+        }
+
+
+    });
+
 }
