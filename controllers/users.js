@@ -115,11 +115,23 @@ function login(req, res) {
                             } else if (resultData[0].session == 'false') {
                                 users.updateSession(email, "true", function (err, data) {
                                     if (!err) {
-                                        res.status(200).json({
-                                            status: true,
-                                            message: "User Authentication Successfull.",
-                                            data: {}
+                                        commonDB.getByField(dbTables.users, 'email', email, function (err, data) {
+                                            data = JSON.parse(data);
+                                            if (!err) {
+                                                res.status(200).json({
+                                                    status: true,
+                                                    message: "User Authentication Successfull.",
+                                                    data: {data}
+                                                });
+                                            }else{
+                                                res.status(200).json({
+                                                    status: true,
+                                                    message: "Unable to fetch data of user",
+                                                    data: {}
+                                                });
+                                            }
                                         });
+
                                     } else {
                                         res.status(200).json({
                                             status: false,
