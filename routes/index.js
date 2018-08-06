@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var users = require('../controllers/users');
 var poll = require('../controllers/poll');
-
-var path = require('path');
+var pollCategory = require('../controllers/pollCategory');
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -45,5 +44,13 @@ router.get('/api/approvepoll', poll.approvePoll);
 Get Request to get all polls for dashboard
 */
 router.get('/api/getAllPolls', poll.getAllPolls);
+/*
+@QueryParam {userId}
+*/
+router.get('/api/getUserCategory',pollCategory.getUserPreferenceCategory)
+/*
+Get Request to get all category
+*/
+router.get('/api/getAllCategory',pollCategory.getAllCategory)
 
 module.exports = router;
