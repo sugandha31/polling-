@@ -54,7 +54,7 @@ function signup(req, res) {
                                         }
                                     });
                                 } else {
-                                    res.status(500).json({
+                                    res.status(200).json({
                                         status: false,
                                         message: "Something seems to have failed. Try again.",
                                         data: {}
@@ -62,7 +62,7 @@ function signup(req, res) {
                                 }
                             })
                         } else {
-                            res.status(400).json({
+                            res.status(200).json({
                                 status: false,
                                 message: "Username exists.",
                                 data: {}
@@ -71,7 +71,7 @@ function signup(req, res) {
                     })
                 } else {
                     console.log(response);
-                    res.status(400).json({
+                    res.status(200).json({
                         status: false,
                         message: "Duplicate registration.",
                         data: {}
@@ -79,7 +79,7 @@ function signup(req, res) {
                 }
             })
         } else {
-            res.status(400).json({
+            res.status(200).json({
                 status: false,
                 message: "Invalid email",
                 data: {}
@@ -121,9 +121,9 @@ function login(req, res) {
                                                 res.status(200).json({
                                                     status: true,
                                                     message: "User Authentication Successfull.",
-                                                    data: {data}
+                                                    data: { data }
                                                 });
-                                            }else{
+                                            } else {
                                                 res.status(200).json({
                                                     status: true,
                                                     message: "Unable to fetch data of user",

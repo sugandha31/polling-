@@ -5,11 +5,25 @@ module.exports = {
     add: add,
     getByField: getByField,
     getByFieldLike: getByFieldLike,
-    updateByField: updateByField
+    updateByField: updateByField,
+    getAllWithClause:getAllWithClause
 }
 
 function getAll(tablename, callback) {
     Query = 'select * from ' + tablename;
+    db.query(Query, function (err, data) {
+        if (!err) {
+            callback(null, data);
+        } else {
+            callback(err, null);
+        }
+    });
+}
+
+// get all using where clause
+function getAllWithClause(tablename,clauseKey,clauseVal,conditionType, callback) {
+    Query = "select * from " + tablename + " where "+clauseKey+" "+conditionType+" '"+ clauseVal+"'";
+    console.log(Query);
     db.query(Query, function (err, data) {
         if (!err) {
             callback(null, data);

@@ -162,7 +162,7 @@ function approvePoll(req, res) {
 }
 
 function getAllPolls(req,res){
-    commonDB.getAll(dbTables.polls,function(err,data){
+    commonDB.getAllWithClause(dbTables.polls,"isActive","true","=",function(err,data){
         if(!err){
             res.status(200).json({
                 status: true,
