@@ -3,7 +3,8 @@ var dbTables = require('../config/db_table');
 
 module.exports = {
     getAllCategory: getAllCategory,
-    getCategoryByUser:getCategoryByUser
+    getCategoryByUser: getCategoryByUser,
+    addCategory: addCategory
 };
 
 function getAllCategory(callback) {
@@ -19,20 +20,35 @@ function getAllCategory(callback) {
 }
 
 
-function getCategoryByUser(userId,callback){
+function getCategoryByUser(userId, callback) {
 
-    commonDB.getAllWithClause(dbTables.category, "user_id",userId,"=",function(err,data){
+    commonDB.getAllWithClause(dbTables.category, "user_id", userId, "=", function (err, data) {
 
-        if(!err){
-            callback(null,data);
-        }else{
-            callback(err,null);
+        if (!err) {
+            callback(null, data);
+        } else {
+            callback(err, null);
         }
 
     });
 
 }
 
-/*
-Todo : insert into user category
-*/
+
+function addCategory(data, callback) {
+
+    commonDB.getAllWithClause(dbTables.category, 'user_id', data.user_id, '=', function (err, data) {
+        if (!err) {
+            commonDB.add(dbTables.category, data, function (err, res) {
+                if (!err) {
+                    callback(null, res);
+                } else {
+                    callback(err, null);
+                }
+            });
+        } else {
+            callback(err, null);
+        }
+    })
+
+}

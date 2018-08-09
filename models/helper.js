@@ -9,24 +9,13 @@ function insertQuery(user, callback) {
     var values="";
     var Query="";
     async.eachSeries(Object.keys(user),function(key,next){
-        if(key==='answers') {
-            var value = "";
-            async.eachSeries(user[key], function(val, next1) {
-                value += "'" + val + "'" + ",";
-                next1();
-            }, function() {
-                value = value.substr(0, value.length-1);
-                values = values + "ARRAY[" + value + "]" + ",";
-            });
-        }
-        else {
             if(user[key]===null){
                 values=values+user[key]+",";
             }
             else{
                 values=values+"'"+user[key]+"'"+",";
             }
-        }
+        
         keys=keys+key+",";
         next()
     },function(){

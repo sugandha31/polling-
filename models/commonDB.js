@@ -25,7 +25,6 @@ function getAllWithClause(tablename,clauseKey,clauseVal,conditionType, callback)
     Query = "select * from " + tablename + " where "+clauseKey+" "+conditionType+" '"+ clauseVal+"'";
     console.log(Query);
     db.query(Query, function (err, data) {
-        console.log(err);
         if (!err) {
             callback(null, data);
         } else {

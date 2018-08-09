@@ -2,7 +2,8 @@ var categoryModel = require('../models/pollCategory');
 
 module.exports = {
     getAllCategory: getAllCategory,
-    getUserPreferenceCategory:getUserPreferenceCategory
+    getUserPreferenceCategory:getUserPreferenceCategory,
+    addCategory:addCategory
 };
 
 function getAllCategory(req, res) {
@@ -55,5 +56,35 @@ function getUserPreferenceCategory(req, res) {
             data: {}
         });
 
+    }
+}
+
+function addCategory(req,res){
+    if(req.body.hasOwnProperty('user_id') && req.body.hasOwnProperty('cat_id')){
+      var data={
+            user_id:req.body.user_id,
+            cat_id:req.body.cat_id
+        }
+        categoryModel.addCategory(data,function(err,result){
+                if(!err){
+                    res.status(200).json({
+                        status: true,
+                        message: "Category Added",
+                        data: {}
+                    });
+                }else{
+                    res.status(200).json({
+                        status: false,
+                        message: "Error",
+                        data: {}
+                    });
+                }
+        })
+    }else{
+        res.status(200).json({
+            status: false,
+            message: "Data Missing",
+            data: {}
+        });
     }
 }

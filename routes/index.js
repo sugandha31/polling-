@@ -52,5 +52,8 @@ router.get('/api/getUserCategory',pollCategory.getUserPreferenceCategory)
 Get Request to get all category
 */
 router.get('/api/getAllCategory',pollCategory.getAllCategory)
-
+/*
+@BodyParam {user_id,cat_id}
+*/
+router.post('/api/addCategory',pollCategory.addCategory);
 module.exports = router;
