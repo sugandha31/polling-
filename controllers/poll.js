@@ -145,7 +145,7 @@ function approvePoll(req, res) {
                 });
             }else{
                 res.status(200).json({
-                    status: true,
+                    status: false,
                     message: data,
                     data: "error"
                 });
@@ -171,7 +171,7 @@ function getAllPolls(req,res){
             });
         }else{
             res.status(200).json({
-                status: true,
+                status: false,
                 message: data,
                 data: "error"
             });

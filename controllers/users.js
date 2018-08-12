@@ -9,7 +9,8 @@ module.exports = {
     signup: signup,
     login: login,
     logout: logout,
-    changePassword: changePassword
+    changePassword: changePassword,
+    getSession:getSession
 }
 
 function signup(req, res) {
@@ -121,7 +122,7 @@ function login(req, res) {
                                                 res.status(200).json({
                                                     status: true,
                                                     message: "User Authentication Successfull.",
-                                                    data: { data }
+                                                    data: data
                                                 });
                                             } else {
                                                 res.status(200).json({
@@ -260,7 +261,28 @@ function changePassword(req, res) {
             data: {}
         })
     }
+}
 
+function getSession(req,res){
 
+    if(req.query.hasOwnProperty('userid')){
+        var userid=req.query.userid;
+        commonDB.getByField(dbTables.users,'user_id',userid,function(err,data){
+            data = JSON.parse(data);
+            console.log(data);
+            res.status(200).json({
+                status: true,
+                message: "Fetched Data",
+                data: data[0].session
+            })
+        });
+
+    }else{
+        res.status(200).json({
+            status: false,
+            message: "Data Missing",
+            data: {}
+        })
+    }
 
 }
