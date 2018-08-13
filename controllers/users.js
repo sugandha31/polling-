@@ -87,7 +87,7 @@ function signup(req, res) {
             });
         }
     } else {
-        res.status(400).json({
+        res.status(200).json({
             status: false,
             message: "Data Missing",
             data: {}
@@ -101,6 +101,7 @@ function login(req, res) {
         var password = req.body.password;
         commonDB.getByField(dbTables.users, 'email', email, function (err, result) {
             result = JSON.parse(result);
+            console.log(result);
             if (!err && (result != undefined || result != null) && result.length > 0) {
                 password = helper.encryptData(password);
                 if (password == result[0].password) {
@@ -158,7 +159,8 @@ function login(req, res) {
                     })
                 }
             } else if (!err && (result != undefined || result != null) && result.length == 0) {
-                res.status(204).json({
+                console.log("inside");
+                res.status(200).json({
                     status: false,
                     message: "User not Found.",
                     data: {}
