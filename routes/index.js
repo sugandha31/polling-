@@ -13,7 +13,7 @@ Get Request to get all users for admin
 */
 router.get('/api/users', users.getUsers);
 /*
-@BodyParam {email,user_name,password}
+@BodyParam {email,user_name,password,name}
 */
 router.post('/api/signup', users.signup);
 /*
