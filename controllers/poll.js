@@ -59,7 +59,7 @@ function create_poll(req, res) {
                                         res.status(200).json({
                                             status: true,
                                             message: "Poll Created",
-                                            data: { result }
+                                            data:  result 
                                         });
                                     } else {
                                         res.status(200).json({
@@ -145,7 +145,7 @@ function approvePoll(req, res) {
                 });
             }else{
                 res.status(200).json({
-                    status: true,
+                    status: false,
                     message: data,
                     data: "error"
                 });
@@ -172,7 +172,7 @@ function getAllPolls(req,res){
             });
         }else{
             res.status(200).json({
-                status: true,
+                status: false,
                 message: data,
                 data: "error"
             });

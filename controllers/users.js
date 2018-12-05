@@ -9,7 +9,8 @@ module.exports = {
     signup: signup,
     login: login,
     logout: logout,
-    changePassword: changePassword
+    changePassword: changePassword,
+    getSession:getSession
 }
 
 function signup(req, res) {
@@ -88,7 +89,7 @@ function signup(req, res) {
             });
         }
     } else {
-        res.json({
+        res.status(200).json({
             status: false,
             message: "Data Missing",
             data: {}
@@ -102,6 +103,7 @@ function login(req, res) {
         var password = req.body.password;
         commonDB.getByField(dbTables.users, 'email', email, function (err, result) {
             result = JSON.parse(result);
+            console.log(result);
             if (!err && (result != undefined || result != null) && result.length > 0) {
                 password = helper.encryptData(password);
                 if (password == result[0].password) {
@@ -262,3 +264,29 @@ function changePassword(req, res) {
         })
     }
 }
+}
+
+function getSession(req,res){
+
+    if(req.query.hasOwnProperty('userid')){
+        var userid=req.query.userid;
+        commonDB.getByField(dbTables.users,'user_id',userid,function(err,data){
+            data = JSON.parse(data);
+            console.log(data);
+            res.status(200).json({
+                status: true,
+                message: "Fetched Data",
+                data: data[0].session
+            })
+        });
+
+    }else{
+        res.status(200).json({
+            status: false,
+            message: "Data Missing",
+            data: {}
+        })
+    }
+
+}
+

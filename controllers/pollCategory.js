@@ -14,7 +14,7 @@ function getAllCategory(req, res) {
             res.status(200).json({
                 status: true,
                 message: "Fetched all category",
-                data: { data }
+                data: data 
             });
         } else {
             res.status(200).json({
@@ -37,7 +37,7 @@ function getUserPreferenceCategory(req, res) {
                 res.status(200).json({
                     status: true,
                     message: "Fetched all category",
-                    data: { data }
+                    data:  data 
                 });
             } else {
                 res.status(200).json({
