@@ -51,7 +51,7 @@ server.on('connection', function (socket) {
                 server.emit('pos_click_count', data);//send to all users new counter value
             } else {
                 //Todo handle error
-                console.log("Don't be a jerk.. Unable to update");
+                console.log("Unable to update");
 
             }
         });
@@ -68,7 +68,7 @@ server.on('connection', function (socket) {
                 server.emit('neg_click_count', data);//send to all users new counter value
             } else {
                 //Todo handle error
-                console.log("Don't be a jerk.. Unable to update");
+                console.log("Unable to update");
             }
         });
     });
